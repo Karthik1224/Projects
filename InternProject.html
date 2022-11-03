@@ -1,0 +1,326 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+<meta charset="UTF-8"> 
+<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.cs s"> 
+<link rel="stylesheet" 
+href="https://cdnjs.cloudflare.com/ajax/libs/fontawesome/4.7.0/css/font awesome.min.css"> 
+<title>To-Do</title> 
+<style> 
+body { 
+display: flex; 
+font-weight: bold; 
+flex-direction: column; 
+justify-content: center; 
+align-items: center; 
+background-image: url('clouds.jpg'); 
+background-size:cover; 
+font-family:-applesystem, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,  Cantarell, 'OpenSans', 'Helvetica Neue', sans-serif; 
+} 
+#priority { 
+outline: none; 
+border: none; 
+background-color: #FFBCBC; 
+border-radius: 10px; 
+width: 200px; 
+height: 30px; 
+padding: 0px 10px; 
+font-size: 16px; 
+} 
+#header{ 
+position: absolute; 
+top: 15px; 
+font-size: 30px; 
+text-align: center; 
+color: rgb(177, 89, 89); 
+} 
+footer {  
+/* position: fixed; */ 
+width: 95%; 
+color:rgb(177, 89, 89);  
+text-align: center;  
+size: 40px; 
+}  
+#content{ 
+margin-top: 30px; 
+border: 1px black solid; 
+box-shadow: 5px 5px 10px rgb(128, 146, 163); background-color:transparent; 
+border-radius: 5px; 
+padding: 20px; 
+width:50%; 
+height: 500px; 
+text-align: center; 
+} 
+#color { 
+outline: none; 
+border: none; 
+background-color: rgb(218, 238, 108); border-radius: 10px; 
+width: 100px; 
+height: 30px; 
+padding: 0px 10px; 
+font-size: 16px; 
+} 
+option { 
+background-color: rgb(177, 113, 89); } 
+.input-control { 
+width: 300px; 
+border-radius: 10px; 
+background-color:#FFEACA; 
+outline: none; 
+border: none; 
+height: 30px; 
+padding: 0px 10px; 
+color: black; 
+font-size: 14px; 
+} 
+button{ 
+background-color: #FFBCBC; 
+border: none; 
+border-radius: 5px; 
+height: 25px; 
+} 
+.btn { 
+font-size: 16px; 
+width: 70px;
+height: 30px; 
+outline: none; 
+border: none; 
+border-radius: 2px; 
+background-color: rgb(71, 80, 209); color: rgb(194, 159, 159); 
+cursor: pointer; 
+transition: 0.5s; 
+} 
+.btn:hover { 
+background-color: rgb(85, 145, 145); color: black; 
+} 
+th 
+{ 
+background-color:#FFBCBC; 
+padding: 10px; 
+border-radius: 10px; 
+} 
+table{ 
+width:100% ; 
+align-self: center; 
+} 
+#clickdrop{ 
+display: none; 
+} 
+#all-rows 
+{ 
+background-color: burlywood; } 
+#display 
+{ 
+display: none; 
+align-self: center; 
+} 
+#allfilterlow 
+{ 
+display: none; 
+} 
+#allfiltermedium 
+{ 
+display: none; 
+} 
+#allfilterhigh 
+{ 
+display: none; 
+}
+#medium-btn{ 
+background-color: #ECEFA4; 
+} 
+#low-btn{ 
+background-color: #93F6C6; 
+} 
+#high-btn{ 
+background-color: #D54C4C; 
+} 
+#alls-btn{ 
+background-color: burlywood; 
+} 
+#plus{ 
+width:20px; 
+border-radius: 5px; 
+} 
+</style> 
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script> <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> </head> 
+<body> 
+<div id="header"><i class="fas fa-list-ul" style="font-size: 25px;"></i> <b>TO DO</b></div> 
+<br><br> 
+<div id="content"> 
+<div id="new-task" >New Task 
+<button onclick="taskdeets()">+</button> 
+</div> 
+<br><br> 
+<div id="clickdrop"> 
+<form id="myform"> 
+<div> 
+<input type="text" id="taskname" class="inputcontrol" placeholder="Enter Task Name"> </div> 
+<br> 
+<div class="input-form"> 
+<input type="text" id="taskdesc" class="inputcontrol" placeholder="Enter Task  Description"> 
+</div> 
+<br> 
+<select id="priority"> 
+<option selected disabled>Select priority</option> 
+<option value="low">Low</option> 
+<option value="medium">Medium</option> 
+<option value="high">High</option> 
+</select>
+</form> 
+<br> 
+<button id="btn" onclick="aftersave()">Save</button> <br> 
+</div> 
+<table id="display"> 
+<tr id="all-rows"> 
+<th>Task Name</th> 
+<th>Task Description</th> 
+</tr> 
+</table> 
+<table id="allfilterlow"> 
+<tr> 
+<th>Task Name</th> 
+<th>Task Description</th> 
+</tr> 
+</table> 
+<table id="allfiltermedium"> 
+<tr> 
+<th>Task Name</th> 
+<th>Task Description</th> 
+</tr> 
+</table> 
+<table id="allfilterhigh"> 
+<tr> 
+<th>Task Name</th> 
+<th>Task Description</th> 
+</tr> 
+</table> 
+<div> 
+<h4>Filters:</h4> 
+<button id="low-btn" onclick="filterlow()">Low</button> <button id="medium-btn" onclick="filtermedium()">Medium</button> <button id="high-btn" onclick="filterhigh()">High</button> <button id="high-btn" onclick="showall()">All</button> </div> 
+</div> 
+<br><br> 
+<footer> 
+Contact Us:
+<i class="fab fa-twitter"></i> 
+<i class="fab fa-facebook-square"></i> 
+</footer> 
+<script> 
+var num=0, i=0; //number of tasks 
+let mytasks = []; 
+var tt = document.getElementById("display"); function taskdeets() 
+{ 
+var showdiv = document.getElementById("clickdrop"); showdiv.style.display = "block"; 
+} 
+function aftersave() 
+{ 
+var msg1 = document.getElementById("taskname").value;  var msg2 = document.getElementById("taskdesc").value; var msg3 = document.getElementById("priority").value; var msg4 = 0; 
+var newRow = tt.insertRow(num+1); 
+var cell1 = newRow.insertCell(0); 
+var cell2 = newRow.insertCell(1); 
+cell1.innerHTML = msg1; 
+cell2.innerHTML = msg2;  
+tt.style.display = "block"; 
+mytasks.push({Name:msg1, Desc:msg2, Color:msg3}); 
+if(msg3=="low") 
+{ newRow.style.backgroundColor = "green"; mytasks[num].Color = "green"} 
+else if(msg3=="medium") 
+{ newRow.style.backgroundColor = "#FFBF00"; mytasks[num].Color = "#FFBF00" } 
+else 
+{ newRow.style.backgroundColor = "red"; 
+mytasks[num].Color = "red"} 
+console.log(mytasks); 
+num += 1; 
+i = i+1; 
+$("#myform")[0].reset(); 
+var showdiv = document.getElementById("clickdrop");
+showdiv.style.display = "none"; 
+} 
+console.log(mytasks); 
+function filterlow() 
+{ 
+tt.style.display = "none"; 
+document.getElementById("allfiltermedium").style.display="none"; document.getElementById("allfilterhigh").style.display="none"; var filtered = []; 
+var total = document.getElementById("display").rows.length; 
+var size = document.getElementById("allfilterlow").rows.length; var table = document.getElementById("allfilterlow"); for (var i = size-1; i >0; i--) {  
+table.deleteRow(i); 
+} 
+var j,k=0; 
+for(j=0;j<total;j++) 
+{ 
+if(mytasks[j].Color=="green") 
+{ 
+console.log(mytasks[j].Color); 
+var tt2 = document.getElementById("allfilterlow"); var newRow = tt2.insertRow(k+1); 
+var filcell1 = newRow.insertCell(0); 
+var filcell2 = newRow.insertCell(1); 
+newRow.style.backgroundColor = mytasks[j].Color; 
+filcell1.innerHTML = mytasks[j].Name; 
+filcell2.innerHTML = mytasks[j].Desc; 
+tt2.style.display="block"; 
+k++; 
+}  
+} 
+} 
+function filtermedium() 
+{ 
+tt.style.display = "none"; 
+document.getElementById("allfilterlow").style.display="none"; document.getElementById("allfilterhigh").style.display="none"; var filtered = []; 
+var total = document.getElementById("display").rows.length; 
+var size = document.getElementById("allfiltermedium").rows.length; var table = document.getElementById("allfiltermedium"); for (var i = size-1; i >0; i--) 
+{ 
+table.deleteRow(i); 
+}
+var j,k=0; 
+for(j=0;j<total;j++) 
+{ 
+if(mytasks[j].Color=="#FFBF00") 
+{ 
+console.log(mytasks[j].Color); 
+var tt2 = document.getElementById("allfiltermedium"); var newRow = tt2.insertRow(k+1); 
+var filcell1 = newRow.insertCell(0); 
+var filcell2 = newRow.insertCell(1); 
+newRow.style.backgroundColor = mytasks[j].Color; 
+filcell1.innerHTML = mytasks[j].Name; 
+filcell2.innerHTML = mytasks[j].Desc; 
+tt2.style.display="block"; 
+k++; 
+}  
+} 
+} 
+function filterhigh() 
+{ 
+tt.style.display = "none"; 
+document.getElementById("allfiltermedium").style.display="none"; document.getElementById("allfilterlow").style.display="none"; var filtered = []; 
+var total = document.getElementById("display").rows.length; 
+var size = document.getElementById("allfilterhigh").rows.length; var table = document.getElementById("allfilterhigh"); for (var i = size-1; i >0; i--) 
+{  
+table.deleteRow(i); 
+} 
+var j,k=0; 
+for(j=0;j<total;j++) 
+{ 
+if(mytasks[j].Color=="red") 
+{ 
+console.log(mytasks[j].Color); 
+var tt2 = document.getElementById("allfilterhigh"); var newRow = tt2.insertRow(k+1); 
+var filcell1 = newRow.insertCell(0); 
+var filcell2 = newRow.insertCell(1); 
+newRow.style.backgroundColor = mytasks[j].Color; 
+filcell1.innerHTML = mytasks[j].Name; 
+filcell2.innerHTML = mytasks[j].Desc; 
+tt2.style.display="block"; 
+k++; 
+}  
+}
+} 
+function showall() 
+{ 
+tt.style.display = "block"; 
+document.getElementById("allfiltermedium").style.display="none"; 
+document.getElementById("allfilterlow").style.display="none"; 
+document.getElementById("allfilterhigh").style.display="none"; 
+} 
+</script> 
